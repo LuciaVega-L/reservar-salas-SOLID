@@ -1,4 +1,4 @@
-package edu.usta.reservas;
+package isi.reservarsalas.mainView;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;

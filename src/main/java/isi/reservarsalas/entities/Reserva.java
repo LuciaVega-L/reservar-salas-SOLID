@@ -1,4 +1,4 @@
-package edu.usta.reservas;
+package isi.reservarsalas.entities;
 
 public class Reserva {
 
