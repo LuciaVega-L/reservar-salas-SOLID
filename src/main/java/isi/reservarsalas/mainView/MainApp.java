@@ -1,4 +1,4 @@
-package edu.usta.reservas;
+package isi.reservarsalas.mainView;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

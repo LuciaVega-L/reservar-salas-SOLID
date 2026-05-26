@@ -1,4 +1,7 @@
-package edu.usta.reservas;
+package isi.reservarsalas.usecases.services;
+
+import isi.reservarsalas.entities.Reserva;
+import isi.reservarsalas.entities.Sala;
 
 import java.util.ArrayList;
 import java.util.List;
