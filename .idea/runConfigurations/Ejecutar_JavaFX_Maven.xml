@@ -11,10 +11,11 @@
           </option>
           <option name="goals">
             <list>
-              <option value="clean" />
               <option value="javafx:run" />
+              <option value="-e" />
             </list>
           </option>
+          <option name="multimoduleDir" />
           <option name="pomFileName" />
           <option name="profilesMap">
             <map />

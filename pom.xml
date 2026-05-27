@@ -39,7 +39,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>edu.usta.reservas.MainApp</mainClass>
+                    <mainClass>isi.reservarsalas.mainView.MainApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
