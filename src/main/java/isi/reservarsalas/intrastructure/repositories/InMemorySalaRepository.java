@@ -31,6 +31,11 @@ public class InMemorySalaRepository implements SalaRepository{
     }
 
     @Override
+    public List<Sala> findAll() {
+        return salas;
+    }
+
+    @Override
     public Sala findBySala(String IdSala) {
         int i;
 

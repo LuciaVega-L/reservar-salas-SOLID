@@ -30,6 +30,11 @@ public class InMemoryReservaRepository implements ReservaRepository {
     }
 
     @Override
+    public List<Reserva> findAll() {
+        return reservas;
+    }
+
+    @Override
     public Reserva findByReserva(String IdReserva){
         int i;
 
