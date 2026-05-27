@@ -1,4 +1,4 @@
-package isi.reservarsalas.usecases;
+package isi.reservarsalas.usecases.services;
 
 import isi.reservarsalas.entities.Reserva;
 import isi.reservarsalas.entities.Sala;
