@@ -42,6 +42,10 @@ public class Sala {
         return activa;
     }
 
+    public boolean isInactiva() {
+        return activa = false;
+    }
+
     public void setActiva(boolean activa) {
         this.activa = activa;
     }
