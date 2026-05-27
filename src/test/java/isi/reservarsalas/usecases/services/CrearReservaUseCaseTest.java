@@ -81,4 +81,44 @@ class CrearReservaUseCaseTest {
                 "Clase", null, 30);
         assertEquals("Error: el responsable no puede estar vacío.", result.getMessage());
     }
+    @Test
+    void execute_ceroAsistentes(){
+        OperationResult result = useCase.execute("102", "GC2", "2026-06-01", 9, 11,
+                "Clase", "Lucia Vega", 0);
+        assertEquals("Error: la cantidad de asistentes debe ser mayor que cero.", result.getMessage());
+    }
+    @Test
+    void execute_MuchosAsistentes(){
+        OperationResult result = useCase.execute("102", "GC2", "2026-06-01", 9, 11,
+                "Clase", "Lucia Vega", 31);
+        assertEquals("Error: la cantidad de asistentes supera la capacidad de la sala.", result.getMessage());
+    }
+    @Test
+    void execute_ReservaNoValia(){
+        Sala sala = new Sala("GC3", "Sala 101", "LABORATORIO", 30, "Edificio A");
+        salaRepository.save(sala);
+        OperationResult result = useCase.execute("102", "GC3", "2026-06-01", 11, 21,
+                "Clase", "Lucia Vega", 30);
+        assertEquals("Error: el laboratorio solo se puede reservar para actividades de tipo PRACTICA.", result.getMessage());
+    }
+    @Test
+    void execute_PocosAsistentesAuditorio(){
+        Sala sala = new Sala("GC3", "Sala 101", "AUDITORIO", 300, "Edificio A");
+        salaRepository.save(sala);
+        OperationResult result = useCase.execute("102", "GC3", "2026-06-01", 11, 21,
+                "Clase", "Lucia Vega", 3);
+        assertEquals("Error: el auditorio requiere mínimo 30 asistentes.", result.getMessage());
+    }
+    @Test
+    void execute_MismoHorarioReserva(){
+        OperationResult result = useCase.execute("102", "GC2", "2026-06-01", 9, 11,
+                "Clase", "Lucia Vega", 30);
+        assertEquals("Error: la sala ya tiene una reserva en ese horario.", result.getMessage());
+    }
+    @Test
+    void execute_ReservaExitosa(){
+        OperationResult result = useCase.execute("102", "GC2", "2026-06-01", 11, 21,
+                "Clase", "Lucia Vega", 30);
+        assertEquals("Reserva creada correctamente.", result.getMessage());
+    }
 }
