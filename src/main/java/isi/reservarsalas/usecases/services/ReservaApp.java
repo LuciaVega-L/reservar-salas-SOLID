@@ -2,7 +2,7 @@ package isi.reservarsalas.usecases.services;
 
 import isi.reservarsalas.intrastructure.repositories.InMemoryReservaRepository;
 import isi.reservarsalas.intrastructure.repositories.InMemorySalaRepository;
-import isi.reservarsalas.usecases.ConsultarReservaUseCase;
+import isi.reservarsalas.usecases.services.ConsultarReservaUseCase;
 import isi.reservarsalas.usecases.dto.OperationResult;
 import isi.reservarsalas.usecases.ports.ReservaRepository;
 import isi.reservarsalas.usecases.ports.SalaRepository;
