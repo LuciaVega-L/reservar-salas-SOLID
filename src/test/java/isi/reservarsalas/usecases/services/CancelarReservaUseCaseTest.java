@@ -14,10 +14,11 @@ class CancelarReservaUseCaseTest {
 
     private ReservaRepository reservaRepository;
     private CancelarReservaUseCase UseCase;
+    private Reserva reserva;
 
     @BeforeEach
     void setUp() {
-        ReservaRepository reservaRepository = new InMemoryReservaRepository();
+
         reservaRepository = new InMemoryReservaRepository();
         UseCase = new CancelarReservaUseCase(reservaRepository);
     }
@@ -27,5 +28,17 @@ class CancelarReservaUseCaseTest {
 
         OperationResult result = UseCase.execute(null);
         assertEquals("No se puede cancelar. La reserva no existe.", result.getMessage());
+    }
+    @Test
+    void execute_Reserva_Cancelado() {
+
+        reserva = new Reserva("101", "GC2", "2026-06-01", 9, 11,
+                "Clase", "Lucia Vega", 30);
+
+        reservaRepository.save(reserva);
+        UseCase.execute("101");
+        OperationResult result = UseCase.execute("101");
+
+        assertEquals("No se puede cancelar. La reserva ya estaba cancelada.", result.getMessage());
     }
 }
