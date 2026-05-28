@@ -2,28 +2,36 @@ package isi.reservarsalas.usecases.services;
 
 import isi.reservarsalas.intrastructure.repositories.InMemoryReservaRepository;
 import isi.reservarsalas.intrastructure.repositories.InMemorySalaRepository;
+import isi.reservarsalas.usecases.rules.ReglaReserva;
 import isi.reservarsalas.usecases.services.ConsultarReservaUseCase;
 import isi.reservarsalas.usecases.dto.OperationResult;
 import isi.reservarsalas.usecases.ports.ReservaRepository;
 import isi.reservarsalas.usecases.ports.SalaRepository;
+import isi.reservarsalas.usecases.ports.ReservaRepository;
+
+import java.util.List;
 
 public class ReservaApp {
 
     private final SalaRepository salaRepository;
     private final ReservaRepository reservaRepository;
 
+
     private final RegistrarSalaUseCase registrarSalaUseCase;
     private final CrearReservaUseCase crearReservaUseCase;
     private final ConsultarReservaUseCase consultarReservaUseCase;
     private final CancelarReservaUseCase cancelarReservaUseCase;
     private final ListarSalasUseCase listarSalasUseCase;
+    private final List<ReglaReserva> reglas;
 
-    public ReservaApp() {
+    public ReservaApp(List<ReglaReserva> reglas) {
+        this.reglas = reglas;
         salaRepository = new InMemorySalaRepository();
         reservaRepository = new InMemoryReservaRepository();
 
+
         registrarSalaUseCase = new RegistrarSalaUseCase(salaRepository);
-        crearReservaUseCase = new CrearReservaUseCase(salaRepository, reservaRepository);
+        crearReservaUseCase = new CrearReservaUseCase(salaRepository, reservaRepository,  reglas);
         consultarReservaUseCase = new ConsultarReservaUseCase(reservaRepository, salaRepository);
         cancelarReservaUseCase = new CancelarReservaUseCase(reservaRepository);
         listarSalasUseCase = new ListarSalasUseCase(salaRepository, reservaRepository);
