@@ -7,8 +7,11 @@ import isi.reservarsalas.intrastructure.repositories.InMemorySalaRepository;
 import isi.reservarsalas.usecases.dto.OperationResult;
 import isi.reservarsalas.usecases.ports.ReservaRepository;
 import isi.reservarsalas.usecases.ports.SalaRepository;
+import isi.reservarsalas.usecases.rules.ReglaReserva;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,12 +20,13 @@ class CrearReservaUseCaseTest {
     private ReservaRepository reservaRepository;
     private CrearReservaUseCase useCase;
     private Reserva reserva;
+    private List<ReglaReserva> reglas;
 
     @BeforeEach
     void setUp() {
         salaRepository = new InMemorySalaRepository();
         reservaRepository = new InMemoryReservaRepository();
-        useCase = new CrearReservaUseCase(salaRepository, reservaRepository);
+        useCase = new CrearReservaUseCase(salaRepository, reservaRepository, reglas);
         Sala sala = new Sala("GC2", "Sala 101", "AULA", 30, "Edificio A");
         salaRepository.save(sala);
 

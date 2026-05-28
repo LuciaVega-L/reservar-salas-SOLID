@@ -5,6 +5,7 @@ import isi.reservarsalas.entities.Sala;
 import isi.reservarsalas.usecases.dto.OperationResult;
 import isi.reservarsalas.usecases.ports.ReservaRepository;
 import isi.reservarsalas.usecases.ports.SalaRepository;
+import isi.reservarsalas.usecases.rules.ReglaReserva;
 
 import java.util.List;
 
@@ -12,10 +13,14 @@ public class CrearReservaUseCase {
 
     private final SalaRepository salaRepository;
     private final ReservaRepository reservaRepository;
+    private final List<ReglaReserva> reglas;
 
-    public CrearReservaUseCase(SalaRepository salaRepository, ReservaRepository reservaRepository) {
+    public CrearReservaUseCase(SalaRepository salaRepository,
+                               ReservaRepository reservaRepository,
+                               List<ReglaReserva> reglas) {
         this.salaRepository = salaRepository;
         this.reservaRepository = reservaRepository;
+        this.reglas = reglas;
     }
 
     public OperationResult execute(String id, String salaId, String fecha, int horaInicio, int horaFin,
@@ -55,25 +60,6 @@ public class CrearReservaUseCase {
             return OperationResult.fail("Error: el responsable no puede estar vacío.");
         }
 
-        if (cantidadAsistentes <= 0) {
-            return OperationResult.fail("Error: la cantidad de asistentes debe ser mayor que cero.");
-        }
-
-        if (cantidadAsistentes > sala.getCapacidad()) {
-            return OperationResult.fail("Error: la cantidad de asistentes supera la capacidad de la sala.");
-        }
-
-        if (sala.getTipo().equals("LABORATORIO")) {
-            if (!tipoActividad.equals("PRACTICA")) {
-                return OperationResult.fail("Error: el laboratorio solo se puede reservar para actividades de tipo PRACTICA.");
-            }
-        }
-
-        if (sala.getTipo().equals("AUDITORIO")) {
-            if (cantidadAsistentes < 30) {
-                return OperationResult.fail("Error: el auditorio requiere mínimo 30 asistentes.");
-            }
-        }
 
         List<Reserva> todasLasReservas = reservaRepository.findAll();
         for (Reserva reserva : todasLasReservas) {
@@ -92,6 +78,13 @@ public class CrearReservaUseCase {
 
         Reserva nuevaReserva = new Reserva(id, salaId, fecha, horaInicio, horaFin,
                 tipoActividad, responsable, cantidadAsistentes);
+
+        for (ReglaReserva regla : reglas) {
+            OperationResult resultado = regla.validar(nuevaReserva, sala);
+            if (!resultado.isSuccess()) {
+                return resultado;
+            }
+        }
 
         reservaRepository.save(nuevaReserva);
 

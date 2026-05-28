@@ -1,6 +1,10 @@
 package isi.reservarsalas.mainView;
 
 import isi.reservarsalas.usecases.dto.OperationResult;
+import isi.reservarsalas.usecases.rules.ReglaAuditorio;
+import isi.reservarsalas.usecases.rules.ReglaCapacidad;
+import isi.reservarsalas.usecases.rules.ReglaLaboratorio;
+import isi.reservarsalas.usecases.rules.ReglaReserva;
 import isi.reservarsalas.usecases.services.ReservaApp;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -13,6 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservaView {
 
@@ -36,7 +43,12 @@ public class ReservaView {
     private TextArea txtResultado;
 
     public ReservaView() {
-        reservaApp = new ReservaApp();
+        List<ReglaReserva> reglas = new ArrayList<>();
+        reglas.add(new ReglaCapacidad());
+        reglas.add(new ReglaLaboratorio());
+        reglas.add(new ReglaAuditorio());
+
+        reservaApp = new ReservaApp(reglas);
     }
 
     public Parent crearVista() {
